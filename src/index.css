@@ -4,6 +4,15 @@
 @theme {
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-white: var(--text-main);
+  --color-black: var(--bg-app);
+  --color-neutral-300: var(--text-main);
+  --color-neutral-400: var(--text-muted);
+  --color-neutral-500: var(--text-muted);
+  --color-neutral-700: var(--border-active);
+  --color-neutral-800: var(--border-main);
+  --color-neutral-900: var(--bg-card);
+  --color-neutral-950: var(--bg-panel);
 }
 
 /* Custom Rick & Morty Sci-Fi styles */
@@ -139,4 +148,22 @@ body {
   position: absolute;
   background: linear-gradient(to right, var(--border-active), var(--text-sec));
 }
+
+[data-theme='light'] .text-\[\#39ff14\] { color: #258c06 !important; }
+[data-theme='light'] .bg-\[\#39ff14\] { background-color: #258c06 !important; }
+[data-theme='light'] .border-\[\#39ff14\] { border-color: #258c06 !important; }
+[data-theme='light'] .border-\[\#39ff14\]\/30 { border-color: rgba(37, 140, 6, 0.3) !important; }
+[data-theme='light'] .bg-\[\#39ff14\]\/5 { background-color: rgba(37, 140, 6, 0.05) !important; }
+[data-theme='light'] .text-\[\#39ff14\]\/80 { color: rgba(37, 140, 6, 0.8) !important; }
+[data-theme='light'] .text-\[\#39ff14\]\/85 { color: rgba(37, 140, 6, 0.85) !important; }
+[data-theme='light'] .text-\[\#39ff14\]\/90 { color: rgba(37, 140, 6, 0.9) !important; }
+[data-theme='light'] .shadow-\[\#39ff14\]\/20 { --tw-shadow-color: rgba(37, 140, 6, 0.2) !important; --tw-shadow: var(--tw-shadow-colored) !important; }
+[data-theme='light'] .border-\[\#39ff14\]\/20 { border-color: rgba(37, 140, 6, 0.2) !important; }
+[data-theme='light'] .border-\[\#39ff14\]\/60 { border-color: rgba(37, 140, 6, 0.6) !important; }
+
+/* Legibility fixes for yellow/amber on light bg */
+[data-theme='light'] .text-amber-400 { color: #d97706 !important; }
+[data-theme='light'] .bg-amber-400 { background-color: #d97706 !important; }
+[data-theme='light'] .text-yellow-400 { color: #ca8a04 !important; }
+[data-theme='light'] .text-red-400 { color: #dc2626 !important; }
 
