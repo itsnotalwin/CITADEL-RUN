@@ -8,33 +8,33 @@
 
 /* Custom Rick & Morty Sci-Fi styles */
 :root {
-  --bg-app: #050811; /* Infinite cosmic space deep void */
-  --bg-panel: #0a0e1c; /* Tech space paneling */
-  --bg-card: #0f162b; /* Portal gun computer unit */
-  --bg-hover: #1b2647; /* Cyber highlighted state */
-  --border-main: #123524; /* Chemical portal green-infused dark slate */
-  --border-active: #39ff14; /* Glowing Neon Portal Green! */
-  --text-main: #e2f3f5; /* Pale cyber-teal white (Rick's coat) */
-  --text-sec: #00ffca; /* Luminescent green portal energy */
-  --text-muted: #577d88; /* Cosmic dust teal gray */
-  --accent-color: #39ff14; /* Neon Portal Liquid */
-  --accent-text: #041201; /* High contrast text on green */
-  --toggle-inactive: #161e38;
+  --bg-app: #121110; /* Cocoa Charcoal Tone */
+  --bg-panel: #1a1817; /* Rich espresso-tinted panel surface */
+  --bg-card: #242120; /* Rich espresso-tinted card surface */
+  --bg-hover: #35302e; /* Warm espresso highlighted hover */
+  --border-main: #312c2a; /* Soft warm sand/cocoa dark border */
+  --border-active: #dfa15b; /* Glowing warm gold-amber active */
+  --text-main: #fcfaf7; /* Alabaster text */
+  --text-sec: #dfa15b; /* Glowing amber secondary text */
+  --text-muted: #938880; /* Cocoa sand gray text */
+  --accent-color: #dfa15b; /* Amber accent */
+  --accent-text: #121110; /* Cocoa contrasting text */
+  --toggle-inactive: #2c2725;
 }
 
 [data-theme='light'] {
-  --bg-app: #eef7f2; /* Lime-cloud sterile environment */
-  --bg-panel: #ffffff; /* Lab station top */
-  --bg-card: #e3f4ec; /* Cyber chamber light background */
-  --bg-hover: #cfead9; /* Light portal chemical splash */
-  --border-main: #b8dfcd; /* Soft chemical line */
-  --border-active: #05b144; /* Standard green portal active */
-  --text-main: #0b2114; /* Obsidian moss */
-  --text-sec: #088b4d; /* Saturated portal tube green */
-  --text-muted: #628271; /* Distant planet green-gray */
-  --accent-color: #fbd512; /* Morty Yellow! */
-  --accent-text: #050a04; /* High-contrast text on yellow */
-  --toggle-inactive: #cee3d8;
+  --bg-app: #faf6f0; /* Oatmeal & Parchment Palette */
+  --bg-panel: #ffffff; /* Clean warm paper white */
+  --bg-card: #f5efe6; /* Soft warm sand parchment */
+  --bg-hover: #ecdcc6; /* Sand hover splash */
+  --border-main: #e6dac6; /* Soft warm sand borders */
+  --border-active: #272421; /* High contrast espresso text tone as active indicator */
+  --text-main: #272421; /* Deep espresso text tone */
+  --text-sec: #8a5e3c; /* Roasted caramel text tone */
+  --text-muted: #7a7065; /* Warm sand gray */
+  --accent-color: #c18c5d; /* Caramel leather accent */
+  --accent-text: #fcfaf7; /* Alabaster text */
+  --toggle-inactive: #e1d0ba;
 }
 
 /* Structural Theme Utility classes */
@@ -51,14 +51,16 @@
 
 /* Sci-fi matrix background pattern on dark mode */
 body {
+  background-color: var(--bg-app);
   background-image: 
-    radial-gradient(ellipse at top, rgba(57, 255, 20, 0.05) 0%, transparent 60%),
-    radial-gradient(circle at 10% 20%, rgba(0, 255, 202, 0.03) 0%, transparent 50%);
+    radial-gradient(ellipse at top, rgba(223, 161, 91, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 10% 20%, rgba(223, 161, 91, 0.02) 0%, transparent 50%);
 }
 
 [data-theme='light'] body {
+  background-color: var(--bg-app);
   background-image: 
-    radial-gradient(ellipse at top, rgba(5, 177, 68, 0.04) 0%, transparent 60%);
+    radial-gradient(ellipse at top, rgba(138, 94, 60, 0.04) 0%, transparent 60%);
 }
 
 /* Custom gorgeous scrollbar aesthetics - Portal fluid */
@@ -100,8 +102,8 @@ body {
 
 /* Selection aesthetics */
 ::selection {
-  background-color: var(--border-main);
-  color: var(--text-main);
+  background-color: var(--border-active);
+  color: var(--bg-app);
 }
 
 /* Animated portal tab button style for Rick and Morty theme */
@@ -114,23 +116,23 @@ body {
 
 .portal-tab-btn:hover {
   background-color: var(--bg-hover);
-  border-color: rgba(57, 255, 20, 0.2);
+  border-color: var(--border-main);
 }
 
 [data-theme='light'] .portal-tab-btn:hover {
-  border-color: rgba(5, 177, 68, 0.2);
+  border-color: var(--border-active);
 }
 
 .portal-tab-btn-active {
   background-color: var(--bg-card) !important;
   border-color: var(--border-active) !important;
   color: var(--text-sec) !important;
-  box-shadow: 0 0 15px rgba(57, 255, 20, 0.15);
+  box-shadow: 0 0 15px rgba(223, 161, 91, 0.1);
 }
 
 [data-theme='light'] .portal-tab-btn-active {
-  color: var(--border-active) !important;
-  box-shadow: 0 0 15px rgba(5, 177, 68, 0.15);
+  color: var(--text-main) !important;
+  box-shadow: 0 0 15px rgba(39, 36, 33, 0.08);
 }
 
 .portal-tab-indicator {
