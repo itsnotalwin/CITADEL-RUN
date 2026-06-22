@@ -269,6 +269,69 @@ export default function WorkshopTab({ store }: WorkshopTabProps) {
         </div>
       </div>
 
+      {/* AUTO BUILD SYSTEM */}
+      {store.unlocks.wood && (
+        <div className="mt-8 mx-2 sm:mx-6 flex flex-col gap-4">
+          <span className={`uppercase font-bold text-neutral-500 tracking-widest leading-none block font-sans ${
+             isCompact ? 'text-[9px]' : 'text-[10px]'
+          }`}>Infrastructure Auto-Build</span>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* PASTURE AUTO BUILD */}
+            <div className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 ${
+              store.autoBuild?.pasture ? 'border-[#39ff14]/30 bg-[#39ff14]/5' : 'border-white/5 bg-neutral-950/10'
+            }`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl p-1.5 bg-black/40 rounded-lg">🛖</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-white text-sm">Auto-Build Pasture</span>
+                  <span className="text-[10px] text-neutral-400 max-w-[200px] leading-tight mt-1">
+                    Automatically consume Mega Seeds and Plutonium to construct Pastures when resources are available.
+                  </span>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  store.toggleAutoBuild('pasture');
+                  if(store.soundEnabled) playClickSound('click');
+                }}
+                className={`px-4 py-2 font-bold uppercase tracking-wider text-[10px] rounded-lg transition-all cursor-pointer ${
+                  store.autoBuild?.pasture ? 'bg-[#39ff14] text-black shadow-[0_0_10px_rgba(57,255,20,0.3)]' : 'bg-white/10 text-white/70 hover:bg-white/20'
+                }`}
+              >
+                {store.autoBuild?.pasture ? 'ACTIVE' : 'INACTIVE'}
+              </button>
+            </div>
+
+            {/* BARN AUTO BUILD */}
+            <div className={`flex items-center justify-between p-4 rounded-xl border transition-all duration-300 ${
+              store.autoBuild?.barn ? 'border-[#39ff14]/30 bg-[#39ff14]/5' : 'border-white/5 bg-neutral-950/10'
+            }`}>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl p-1.5 bg-black/40 rounded-lg">📦</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-white text-sm">Auto-Build Barn</span>
+                  <span className="text-[10px] text-neutral-400 max-w-[200px] leading-tight mt-1">
+                    Automatically consumes Plutonium to construct Barns when resources are available to increase storage.
+                  </span>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  store.toggleAutoBuild('barn');
+                  if(store.soundEnabled) playClickSound('click');
+                }}
+                className={`px-4 py-2 font-bold uppercase tracking-wider text-[10px] rounded-lg transition-all cursor-pointer ${
+                  store.autoBuild?.barn ? 'bg-[#39ff14] text-black shadow-[0_0_10px_rgba(57,255,20,0.3)]' : 'bg-white/10 text-white/70 hover:bg-white/20'
+                }`}
+              >
+                {store.autoBuild?.barn ? 'ACTIVE' : 'INACTIVE'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* PORTAL SYNTHESIS & MORTY CERTIFICATES SECTION */}
       <div className="mt-12 pt-8 border-t border-white/5 mx-2 sm:mx-6 flex flex-col gap-6">
         

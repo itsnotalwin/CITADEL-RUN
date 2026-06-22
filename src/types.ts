@@ -140,6 +140,14 @@ export interface GameState {
     clicksRequired: number;
     clicksMade: number;
   } | null;
+  autoBuild: {
+    pasture: boolean;
+    barn: boolean;
+  };
+  
+  // Prestige
+  portalResets: number;
+  prestigeMultiplier: number;
 
   // Actions
   tick: (deltaSeconds: number) => void;
@@ -153,7 +161,7 @@ export interface GameState {
   researchScience: (type: ScienceType) => void;
   buyUpgrade: (type: UpgradeType) => void;
   forceAddKitten: () => void;
-  multiversalReset: () => void;
+  portalReset: () => void;
   addLog: (text: string, type?: GameLogMessage['type']) => void;
   setGameSpeed: (speed: number) => void;
   toggleSound: () => void;
@@ -164,4 +172,5 @@ export interface GameState {
   setDensity: (density: 'compact' | 'relaxed') => void;
   defuseAnomalyClick: () => void;
   defuseAnomalyInstant: () => void;
+  toggleAutoBuild: (type: 'pasture' | 'barn') => void;
 }

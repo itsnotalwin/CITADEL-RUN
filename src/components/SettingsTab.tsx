@@ -118,19 +118,22 @@ export default function SettingsTab({ store }: SettingsTabProps) {
           <div>
             <div className="font-bold text-white flex items-center gap-2">
               <Zap className="text-yellow-400" size={16} />
-              Portal Flux Points
+              Portal Flux Points (Dimensional Prestige)
             </div>
             <div className="text-neutral-400 text-sm">Global production multiplier: +{store.portalFlux * 10}%</div>
+            {store.portalResets > 0 && (
+               <div className="text-neutral-500 text-xs mt-1">Times Reset: {store.portalResets}</div>
+            )}
           </div>
           <div className="text-3xl font-black text-[#39ff14]">{store.portalFlux}</div>
         </div>
         
         <button
-          onClick={store.multiversalReset}
+          onClick={store.portalReset}
           className="w-full mt-6 flex items-center justify-center gap-3 bg-red-950/30 hover:bg-red-900/40 text-red-400 border border-red-900/50 p-4 rounded-xl font-bold uppercase tracking-wide transition-all"
         >
           <RotateCcw size={18} />
-          Multiversal Reset
+          Portal Reset (Dimension Hop)
         </button>
       </div>
     </div>

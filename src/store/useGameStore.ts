@@ -222,6 +222,12 @@ export const useGameStore = create<GameState>()(
       insaneMode: true,
       density: 'relaxed',
       activeAnomaly: null,
+      autoBuild: {
+        pasture: false,
+        barn: false,
+      },
+      portalResets: 0,
+      prestigeMultiplier: 1.0,
 
       addLog: (text: string, type: GameLogMessage['type'] = 'info') => {
         const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -235,6 +241,13 @@ export const useGameStore = create<GameState>()(
           logs: [newMsg, ...state.logs].slice(0, 80) // keep last 80 messages for high performance
         }));
       },
+
+      toggleAutoBuild: (type: 'pasture' | 'barn') => set(state => ({
+        autoBuild: {
+          ...state.autoBuild,
+          [type]: !state.autoBuild[type]
+        }
+      })),
 
       setGameSpeed: (speed: number) => set({ gameSpeed: speed }),
       toggleSound: () => set(state => ({ soundEnabled: !state.soundEnabled })),
@@ -597,6 +610,52 @@ export const useGameStore = create<GameState>()(
         if (ironAmt < 0) ironAmt = 0;
         if (cultureAmt < 0) cultureAmt = 0;
 
+        // Auto-build
+        const updatedBuildings = { ...state.buildings };
+        const autoBuildable = ['pasture', 'barn'] as const;
+        autoBuildable.forEach(b => {
+          if (state.autoBuild?.[b]) {
+            const bDef = BUILDINGS[b];
+            while (true) {
+              const owned = updatedBuildings[b];
+              if (bDef.maxLimit !== undefined && owned >= bDef.maxLimit) break;
+              
+              let canAfford = true;
+              const computedCosts: Record<string, number> = {};
+              for (const [resType, baseCost] of Object.entries(bDef.baseCost)) {
+                const cost = calculateCost(baseCost, bDef.costRatio, owned);
+                computedCosts[resType] = cost;
+                
+                let curAmt = 0;
+                if (resType === 'catnip') curAmt = catnipAmt;
+                else if (resType === 'wood') curAmt = woodAmt;
+                else if (resType === 'minerals') curAmt = mineralsAmt;
+                else if (resType === 'iron') curAmt = ironAmt;
+                else if (resType === 'science') curAmt = scienceAmt;
+                else if (resType === 'culture') curAmt = cultureAmt;
+                
+                if (curAmt < cost) {
+                  canAfford = false;
+                  break;
+                }
+              }
+
+              if (canAfford) {
+                if (computedCosts.catnip) catnipAmt -= computedCosts.catnip;
+                if (computedCosts.wood) woodAmt -= computedCosts.wood;
+                if (computedCosts.minerals) mineralsAmt -= computedCosts.minerals;
+                if (computedCosts.iron) ironAmt -= computedCosts.iron;
+                if (computedCosts.science) scienceAmt -= computedCosts.science;
+                if (computedCosts.culture) cultureAmt -= computedCosts.culture;
+                
+                updatedBuildings[b] += 1;
+              } else {
+                break;
+              }
+            }
+          }
+        });
+
         // 5. Unlocks Checks
         const unlocks = { ...state.unlocks };
         if (!unlocks.wood && (catnipAmt >= 100 || state.buildings.catnipField > 0)) unlocks.wood = true;
@@ -682,7 +741,7 @@ export const useGameStore = create<GameState>()(
             happiness: finalHappiness
           },
           unlocks,
-          buildings: state.buildings,
+          buildings: updatedBuildings,
           researched: state.researched,
           upgrades: state.upgrades,
           craftedCertificatesCount: state.craftedCertificatesCount || { bronze: 0, silver: 0, gold: 0, infinite: 0 }
@@ -735,6 +794,7 @@ export const useGameStore = create<GameState>()(
             maxKittens,
             happiness: finalHappiness
           },
+          buildings: updatedBuildings,
           unlocks,
           activeAnomaly
         });
@@ -1037,14 +1097,14 @@ export const useGameStore = create<GameState>()(
          return state;
       }),
 
-      multiversalReset: () => {
+      portalReset: () => {
         const state = get();
         // Calculate flux from progress (total buildings + kittens)
         const totalBuildings = Object.values(state.buildings).reduce((a, b) => a + b, 0);
         const totalKittens = state.village.kittens.length;
         const fluxEarned = Math.floor(Math.sqrt((totalBuildings + totalKittens + 1) / 10));
 
-        if (window.confirm(`Are you absolutely sure you want to trigger a multiversal reboot? You will earn ${fluxEarned} Portal Flux, which grants a global ${fluxEarned * 10}% production multiplier. All other progress will be reset.`)) {
+        if (window.confirm(`Are you absolutely sure you want to trigger a dimension hop? You will earn ${fluxEarned} Portal Flux, which grants a global ${fluxEarned * 10}% production multiplier. All other progress will be reset.`)) {
           set({
             resources: BASE_RESOURCES,
             buildings: BASE_BUILDINGS,
@@ -1075,10 +1135,11 @@ export const useGameStore = create<GameState>()(
               {
                 id: 'reset',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                text: `Multiversal reboot complete! You earned ${fluxEarned} Portal Flux.`,
+                text: `Portal Reset complete! You acquired ${fluxEarned} Portal Flux points. Welcome to a new dimension.`,
                 type: 'success'
               }
             ],
+            portalResets: state.portalResets + 1,
             portalFlux: state.portalFlux + fluxEarned,
             lastTick: Date.now()
           });
