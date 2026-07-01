@@ -402,6 +402,8 @@ export default function App() {
         {/* Bottom items: Utilities */}
         <div className="flex flex-row md:flex-col items-center gap-3 md:gap-4 md:mt-auto pr-3 md:pr-0">
           <button
+            aria-label="Toggle theme"
+            title="Toggle theme"
             onClick={() => {
               const nextTheme = store.theme === 'dark' ? 'light' : 'dark';
               store.setTheme(nextTheme);
@@ -412,6 +414,8 @@ export default function App() {
             {store.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button
+            aria-label={store.soundEnabled ? "Mute sound" : "Enable sound"}
+            title={store.soundEnabled ? "Mute sound" : "Enable sound"}
             onClick={() => {
               store.toggleSound();
               if (!store.soundEnabled) playClickSound('success');
@@ -445,6 +449,8 @@ export default function App() {
              <div className="flex items-center gap-4 z-10">
                 <div className="flex items-center theme-bg-card border theme-border rounded-xl p-1 gap-1 shadow-sm backdrop-blur-md">
                   <button
+                    aria-label="Pause game"
+                    title="Pause game"
                     onClick={() => { store.setGameSpeed(0); if (store.soundEnabled) playClickSound('click'); }}
                     className={`p-2 rounded-lg cursor-pointer transition-all ${store.gameSpeed === 0 ? 'bg-white/10 text-white' : 'text-neutral-500 hover:text-neutral-300'}`}
                   >
